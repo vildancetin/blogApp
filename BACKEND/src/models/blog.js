@@ -25,9 +25,20 @@ const blogPostSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
     tags: [
       {
         type: String,
+      },
+    ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "BlogComment",
+        trim: true,
       },
     ],
   },
@@ -56,7 +67,32 @@ const blogCategorySchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+const blogCommentSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    author: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    post: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "BlogPost",
+      required: true,
+    },
+  },
+  {
+    collection: "comment",
+    timestamps: true,
+  }
+);
 module.exports = {
   BlogCategory: mongoose.model("BlogCategory", blogCategorySchema),
   BlogPost: mongoose.model("BlogPost", blogPostSchema),
+  BlogComment: mongoose.model("BlogComment", blogCommentSchema),
 };
