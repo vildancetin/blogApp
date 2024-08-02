@@ -20,6 +20,7 @@ app.all("/",(req,res)=>{
     res.send("WELCOME BLOG API PROJECT")
 })
 
+app.use("/blog",require("./src/routes/blogRouter"))
 // error-handler
 app.use(require("./src/middlewares/errorHandler"))
 
