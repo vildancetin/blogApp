@@ -36,7 +36,7 @@ const blogPostSchema = new mongoose.Schema(
     ],
     comments: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type:  mongoose.Schema.Types.ObjectId,
         ref: "BlogComment",
         trim: true,
       },
@@ -54,6 +54,7 @@ const blogCategorySchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
     },
     posts: [
       {
@@ -76,12 +77,12 @@ const blogCommentSchema = new mongoose.Schema(
       trim: true,
     },
     author: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     post: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "BlogPost",
       required: true,
     },

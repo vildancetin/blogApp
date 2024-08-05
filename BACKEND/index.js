@@ -14,15 +14,17 @@ const PORT = process.env.PORT;
 const HOST = process.env.HOST;
 
 // db connection import
-require("./src/configs/dbConnection")
+require("./src/configs/dbConnection");
 
-app.all("/",(req,res)=>{
-    res.send("WELCOME BLOG API PROJECT")
-})
+app.all("/", (req, res) => {
+  res.send("WELCOME BLOG API PROJECT");
+});
+app.use(require("./src/middlewares/findSearchSortPage"));
 
-app.use("/blog",require("./src/routes/blogRouter"))
-app.use("/user",require("./src/routes/userRouter"))
+app.use("/blog", require("./src/routes/blogRouter"));
+app.use("/user", require("./src/routes/userRouter"));
+
 // error-handler
-app.use(require("./src/middlewares/errorHandler"))
+app.use(require("./src/middlewares/errorHandler"));
 
 app.listen(PORT, () => console.log(`Server Running on http://${HOST}:${PORT}`));
