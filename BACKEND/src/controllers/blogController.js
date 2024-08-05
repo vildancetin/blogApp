@@ -116,7 +116,6 @@ module.exports.BlogPost = {
       },
       { path: "blogCategoryId", select: "name" },
     ]);
-    console.log(data);
     res.status(202).send({
       error: false,
       data,
