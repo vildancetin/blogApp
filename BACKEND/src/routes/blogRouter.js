@@ -16,6 +16,8 @@ router
   .put(BlogCategory.update)
   .patch(BlogCategory.update)
   .delete(BlogCategory.delete);
+  
+  router.route("/categories/:categoryId/posts").get(BlogCategory.posts)
 
 // Blog Post
 router.route("/posts").get(BlogPost.list).post(BlogPost.create);
@@ -25,9 +27,10 @@ router
   .put(BlogPost.update)
   .patch(BlogPost.update)
   .delete(BlogPost.delete);
+  // router.route("/posts/:postId/comments").get(BlogPost.comments)
 
   // Blog Comment
-  router.route("/posts").get(BlogComment.list).post(BlogComment.create);
+  router.route("/comments").get(BlogComment.list).post(BlogComment.create);
 router
   .route("/comments/:commentId")
   .get(BlogComment.read)
