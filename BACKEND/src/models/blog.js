@@ -2,7 +2,8 @@
 /*
     BLOG API MODELS
 */
-const mongoose = require("mongoose");
+const {mongoose} = require("../configs/dbConnection")
+
 // Blog Post Model
 const blogPostSchema = new mongoose.Schema(
   {

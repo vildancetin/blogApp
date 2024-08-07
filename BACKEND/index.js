@@ -14,7 +14,8 @@ const PORT = process.env.PORT;
 const HOST = process.env.HOST;
 
 // db connection import
-require("./src/configs/dbConnection");
+const {dbConnection} = require("./src/configs/dbConnection");
+dbConnection()
 
 app.all("/", (req, res) => {
   res.send("WELCOME BLOG API PROJECT");

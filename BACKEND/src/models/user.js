@@ -2,7 +2,8 @@
 /*
     BLOG API MODELS
 */
-const mongoose = require("mongoose")
+const {mongoose} = require("../configs/dbConnection")
+
 
 // import hashing password function
 const passwordEncrypt = require("../helpers/passwordEncrypt")

@@ -6,7 +6,6 @@
 // to catch if be able to async errors
 require("express-async-errors");
 const { BlogCategory, BlogPost, BlogComment } = require("../models/blog");
-const { populate } = require("../models/user");
 
 // ? CRUD + list operations for category and post
 // ? getModelList is a function that take an argument as a Model and return sorted,filtered,searched,limited data
