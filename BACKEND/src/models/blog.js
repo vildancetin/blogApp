@@ -5,7 +5,7 @@
 const {mongoose} = require("../configs/dbConnection")
 
 // Blog Post Model
-const blogPostSchema = new mongoose.Schema(
+const BlogPostSchema = new mongoose.Schema(
   {
     blogCategoryId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -49,7 +49,7 @@ const blogPostSchema = new mongoose.Schema(
   }
 );
 // Blog Category Model
-const blogCategorySchema = new mongoose.Schema(
+const BlogCategorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -70,7 +70,7 @@ const blogCategorySchema = new mongoose.Schema(
   }
 );
 
-const blogCommentSchema = new mongoose.Schema(
+const BlogCommentSchema = new mongoose.Schema(
   {
     content: {
       type: String,
@@ -94,7 +94,7 @@ const blogCommentSchema = new mongoose.Schema(
   }
 );
 module.exports = {
-  BlogCategory: mongoose.model("BlogCategory", blogCategorySchema),
-  BlogPost: mongoose.model("BlogPost", blogPostSchema),
-  BlogComment: mongoose.model("BlogComment", blogCommentSchema),
+  BlogCategory: mongoose.model("BlogCategory", BlogCategorySchema),
+  BlogPost: mongoose.model("BlogPost", BlogPostSchema),
+  BlogComment: mongoose.model("BlogComment", BlogCommentSchema),
 };
