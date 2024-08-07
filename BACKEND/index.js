@@ -22,6 +22,8 @@ app.all("/", (req, res) => {
 });
 app.use(require("./src/middlewares/findSearchSortPage"));
 
+app.use(require("./src/middlewares/authentication"))
+
 app.use(require("./src/routes/index"))
 
 // error-handler
