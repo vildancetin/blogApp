@@ -14,17 +14,20 @@ const PORT = process.env.PORT;
 const HOST = process.env.HOST;
 
 // db connection import
-const {dbConnection} = require("./src/configs/dbConnection");
-dbConnection()
+const { dbConnection } = require("./src/configs/dbConnection");
+dbConnection();
+app.use(require("./src/middlewares/authentication"));
 
 app.all("/", (req, res) => {
-  res.send("WELCOME BLOG API PROJECT");
+  res.send({
+    error: false,
+    message: "WELCOME BLOG API PROJECT",
+    user: req.user,
+  });
 });
 app.use(require("./src/middlewares/findSearchSortPage"));
 
-app.use(require("./src/middlewares/authentication"))
-
-app.use(require("./src/routes/index"))
+app.use(require("./src/routes/index"));
 
 // error-handler
 app.use(require("./src/middlewares/errorHandler"));

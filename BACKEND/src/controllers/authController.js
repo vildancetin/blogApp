@@ -40,7 +40,7 @@ module.exports = {
     // ? If user send token info with headers , check the token info and delete it.
     // ? Token[0]=Token Token[1]=...fndsnfs...
     const auth = req.headers?.authorization || null; //? Token ...asmdsm....
-    const tokenKey = auth ? auth.split("") : null;
+    const tokenKey = auth ? auth.split(" ") : null;
     let deleted = null;
     if (tokenKey && tokenKey[0] === "Token") {
       deleted = await Token.deleteOne({ token: tokenKey[1] });
