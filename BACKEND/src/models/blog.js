@@ -12,6 +12,11 @@ const BlogPostSchema = new mongoose.Schema(
       ref: "BlogCategory",
       required: true,
     },
+    author:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User",
+      required:true
+    },
     title: {
       type: String,
       trim: true,

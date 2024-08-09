@@ -1,6 +1,6 @@
 "use strict";
 /* -------------------------------------------------------
-    EXPRESS - Personnel API
+    EXPRESS - Blog API
 ------------------------------------------------------- */
 const Token = require("../models/token");
 module.exports = async (req, res, next) => {

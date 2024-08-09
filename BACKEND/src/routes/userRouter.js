@@ -6,13 +6,14 @@
 const router = require("express").Router();
 
 const user = require("../controllers/userController");
+const {isAdmin,isLogin,isAdminOrOwn} = require("../middlewares/permissions")
 
 // Blog Category
-router.route("/").get(user.list).post(user.create);
+router.route("/").get(isLogin,user.list).post(isLogin,user.create);
 router
   .route("/:userId")
-  .get(user.read)
-  .put(user.update)
-  .patch(user.update)
-  .delete(user.delete);
+  .get(isLogin,user.read)
+  .put(isAdminOrOwn,user.update)
+  .patch(isAdminOrOwn,user.update)
+  .delete(isAdminOrOwn,user.delete);
 module.exports = router;
