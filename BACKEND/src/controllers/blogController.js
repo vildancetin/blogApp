@@ -6,14 +6,14 @@
 // to catch if be able to async errors
 require("express-async-errors");
 const { BlogCategory, BlogPost, BlogComment } = require("../models/blog");
-
+const User = require("../models/user");
 // ? CRUD + list operations for category and post
 // ? getModelList is a function that take an argument as a Model and return sorted,filtered,searched,limited data
 // ? getModelListDetails return data details
 module.exports.BlogCategory = {
   list: async (req, res) => {
-    const data = await res.getModelList(BlogCategory,{},[
-        {path:"posts",select:"title"}
+    const data = await res.getModelList(BlogCategory, {}, [
+      { path: "posts", select: "title" },
     ]);
     res.status(200).send({
       error: false,
@@ -30,7 +30,9 @@ module.exports.BlogCategory = {
     });
   },
   read: async (req, res) => {
-    const data = await BlogCategory.find({ _id: req.params.categoryId }).populate( {path:"posts",select:"title"});
+    const data = await BlogCategory.find({
+      _id: req.params.categoryId,
+    }).populate({ path: "posts", select: "title" });
     res.status(202).send({
       error: false,
       data,
@@ -41,7 +43,9 @@ module.exports.BlogCategory = {
       { _id: req.params.categoryId },
       req.body
     );
-    const newData = await BlogCategory.find({ _id: req.params.categoryId }).populate( {path:"posts",select:"title"});
+    const newData = await BlogCategory.find({
+      _id: req.params.categoryId,
+    }).populate({ path: "posts", select: "title" });
     res.status(202).send({
       error: false,
       body: req.body,
@@ -77,6 +81,7 @@ module.exports.BlogPost = {
         populate: { path: "author", select: "email" },
       },
       { path: "blogCategoryId", select: "name" },
+      { path: "author" },
     ]);
     res.status(200).send({
       error: false,
@@ -90,6 +95,7 @@ module.exports.BlogPost = {
     const category = await BlogCategory.findOne({
       _id: req.body.blogCategoryId,
     });
+    const user = await User.findOne({ _id: req.body.author });
     if (!category) {
       return res.status(404).send({
         error: true,
@@ -99,6 +105,15 @@ module.exports.BlogPost = {
     // ? save the post to category posts fields
     category.posts.push(data._id);
     await category.save();
+
+    if (!user) {
+      return res.status(404).send({
+        error: true,
+        message: "Users not found",
+      });
+    }
+    user.posts.push(data._id);
+    await user.save();
 
     res.status(201).send({
       error: false,
@@ -114,6 +129,7 @@ module.exports.BlogPost = {
         populate: { path: "author", select: "email" },
       },
       { path: "blogCategoryId", select: "name" },
+      { path: "author" },
     ]);
     res.status(202).send({
       error: false,
@@ -129,6 +145,7 @@ module.exports.BlogPost = {
         populate: { path: "author", select: "email" },
       },
       { path: "blogCategoryId", select: "name" },
+      { path: "author" },
     ]);
     res.status(202).send({
       error: false,
@@ -140,10 +157,21 @@ module.exports.BlogPost = {
   delete: async (req, res) => {
     const data = await BlogPost.deleteOne({ _id: req.params.postId });
     const category = await BlogCategory.findOne({ posts: req.params.postId });
+    const user = await User.findOne({ _id: req.body.author });
+    const comment = await BlogComment.deleteOne({ post: req.params.postId });
+
     if (category) {
       category.posts.pull(req.params.postId);
       await category.save();
     }
+    if (user) {
+      user.posts.pull(req.params.postId);
+      await user.save();
+    }
+    // if (comment) {
+    //   comment.pull(req.params.commentId);
+    //   await comment.save();
+    // }
     res.sendStatus(data.deletedCount >= 1 ? 204 : 404);
   },
   //   comments: async (req, res) => {

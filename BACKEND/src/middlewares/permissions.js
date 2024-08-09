@@ -2,7 +2,7 @@
 /* -------------------------------------------------------
     EXPRESS - Blog API Permissions
 ------------------------------------------------------- */
-const { BlogPost } = require("../models/blog");
+const { BlogPost ,BlogComment} = require("../models/blog");
 const User = require("../models/user");
 
 // ? Users will be able to perform operations according to permissions.
@@ -55,7 +55,7 @@ module.exports = {
         }
       }
       if (commentId) {
-        const comment = await User.findOne({ _id: commentId });
+        const comment = await BlogComment.findOne({ _id: commentId });
 
         const isCommentOwner = comment && req.user._id.equals(comment.author);
         if (isCommentOwner || req.user.role == "admin") {

@@ -9,7 +9,7 @@ const user = require("../controllers/userController");
 const {isAdmin,isLogin,isAdminOrOwn} = require("../middlewares/permissions")
 
 // Blog Category
-router.route("/").get(isLogin,user.list).post(isLogin,user.create);
+router.route("/").get(isLogin,user.list).post(user.create);
 router
   .route("/:userId")
   .get(isLogin,user.read)

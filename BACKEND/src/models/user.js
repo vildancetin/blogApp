@@ -22,11 +22,23 @@ const UserSchema = new mongoose.Schema({
         trim:true,
         required: [true, 'Email field must be required'],
         unique: [true, 'There is this email. Email field must be unique'],
+        // ? By checking the conformity of the email according to the statements given.
+        validate: [
+            (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
+            'Email type is not correct.'
+        ]
     },
     password:{
         type:String,
         required:true,
-        set:(password)=>passwordEncrypt(password)
+        // ? It checks the suitability of the password according to the given expressions and saves it by encrypting it.
+        set: (password) => {
+            if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
+                return passwordEncrypt(password)
+            } else {
+                throw new Error('Password type is not correct.')
+            }
+        },
     },
     profilePicture:{
         type:String,
