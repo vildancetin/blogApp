@@ -14,10 +14,35 @@ const HOST = process.env.HOST;
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
-/* Middlewares */
+/** DOCUMMENTATION */
+// ? Json
+app.use("/documents/json", (req, res) => {
+  res.sendFile("swagger.json", { root: "." });
+});
+
+// ? Swagger
+const swaggerUi = require("swagger-ui-express");
+const swaggerJson = require("./swagger.json");
+app.use(
+  "/documents/swagger",
+  swaggerUi.serve,  //? start the system
+  swaggerUi.setup(swaggerJson, {  //? import the json file and configure the token 
+    swaggerOptions: { persistAuthorization: true },
+  })
+);
+// ? Redoc
+const redoc= require("redoc-express")
+app.use("/documents/redoc",
+  redoc({
+    title:"Blog API",
+    specUrl:"/documents/json"
+  })
+)
+/* MIDDLEWARES */
+
 // to json
 app.use(express.json());
-
+// logging
 app.use(require("./src/middlewares/logging"));
 
 app.use(require("./src/middlewares/authentication"));
