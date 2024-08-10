@@ -9,6 +9,18 @@ const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 module.exports = {
   login: async (req, res) => {
+    /*
+    #swagger.tags=["Authentication"]
+    #swagger.summary="Login"
+    #swagger.description="Login with email and password"
+    #swagger.parametres["body"]={
+      in:"body",
+      required:true,
+      schema:{
+        email:"example@example.com,
+        password:"Example123?"}
+      } 
+    */
     const { email, password } = req.body;
 
     if (email && password) {
@@ -37,6 +49,12 @@ module.exports = {
     }
   },
   logout: async (req, res) => {
+    /* 
+      #swagger.tags=["Authentication"]
+      #swagger.summary="Logout"
+      #swagger.description="Delete Token" 
+    
+    */
     // ? If user send token info with headers , check the token info and delete it.
     // ? Token[0]=Token Token[1]=...fndsnfs...
     const auth = req.headers?.authorization || null; //? Token ...asmdsm....
@@ -46,9 +64,9 @@ module.exports = {
       deleted = await Token.deleteOne({ token: tokenKey[1] });
     }
     res.status(200).send({
-        error:false,
-        message:"Logot : Tokens deleted",
-        deleted
-    })
+      error: false,
+      message: "Logot : Tokens deleted",
+      deleted,
+    });
   },
 };

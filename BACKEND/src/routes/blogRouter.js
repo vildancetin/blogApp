@@ -4,8 +4,10 @@
 /* ====================================================== */
 
 const router = require("express").Router();
+const {BlogPost}=require("../controllers/blogPostController")
+const { BlogCategory} = require("../controllers/blogCategoryController");
+const { BlogComment} = require("../controllers/blogCommentController");
 
-const { BlogCategory, BlogPost,BlogComment } = require("../controllers/blogController");
 // ? User permissions added and users will be able to perform operations according to permissions.
 const {isAdmin,isLogin,isAdminOrOwn} = require("../middlewares/permissions")
 
